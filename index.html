@@ -880,15 +880,15 @@
   <footer>Ghi chú: các ô trống chỉ hiển thị ký tự chữ, khoảng trắng không đếm. Khi trả lời đúng, mảnh ảnh tương ứng sẽ được lật.</footer>
   <script>
     const qa = [
-      {q: 'Trong các trận chiến thời cổ đại, binh sĩ thường dùng vật gì hình tròn hoặc chữ nhật để che chắn khỏi đòn tấn công?', a: 'KHIÊN'},
-      {q: 'Hiệp sĩ thời Trung cổ mặc gì bằng kim loại để bảo vệ cơ thể trong chiến đấu?', a: 'ÁO GIÁP'},
-      {q: 'Khi làm việc ở công trường xây dựng, người ta thường phải đội vật gì để bảo vệ đầu?', a: 'MŨ BẢO HỘ'},
-      {q: 'Loại phương tiện chuyên dùng, được thiết kế đặc biệt cho các nhiệm vụ khó khăn và thường chỉ có cơ quan chức năng mới sử dụng, gọi là gì?', a: 'XE ĐẶC CHỦNG'},
-      {q: 'Loại xe quân sự có lớp vỏ dày bằng kim loại để chống đạn thường được gọi là gì?', a: 'XE BỌC THÉP'},
-      {q: 'Loài động vật nào thường được huấn luyện để đánh hơi, tìm kiếm hoặc bảo vệ trong nhiều lĩnh vực?', a: 'CHÓ NGHIỆP VỤ'},
-      {q: '(6494928 - 894732 + 84793)x36x0 + 1974', a: '1974'},
-      {q: 'Hiện nay, Đại tướng Lương Tam Quang giữ cương vị Bộ trưởng của Bộ gì ở Việt Nam', a: 'BỘ CÔNG AN'},
-      {q: 'Da của người da đen là màu gì?', a: 'MÀU ĐEN'}
+      {q: 'Trong các trận chiến thời cổ đại, binh sĩ thường dùng vật gì hình tròn hoặc chữ nhật để che chắn khỏi đòn tấn công? (5 kí tự)', a: 'KHIÊN'},
+      {q: 'Hiệp sĩ thời Trung cổ mặc gì bằng kim loại để bảo vệ cơ thể trong chiến đấu? (6 kí tự)', a: 'ÁO GIÁP'},
+      {q: 'Khi làm việc ở công trường xây dựng, người ta thường phải đội vật gì để bảo vệ đầu? (7 kí tự)', a: 'MŨ BẢO HỘ'},
+      {q: 'Loại phương tiện chuyên dùng, được thiết kế đặc biệt cho các nhiệm vụ khó khăn và thường chỉ có cơ quan chức năng mới sử dụng, gọi là gì? (10 kí tự)', a: 'XE ĐẶC CHỦNG'},
+      {q: 'Loại xe quân sự có lớp vỏ dày bằng kim loại để chống đạn thường được gọi là gì? (9 kí tự)', a: 'XE BỌC THÉP'},
+      {q: 'Loài động vật nào thường được huấn luyện để đánh hơi, tìm kiếm hoặc bảo vệ trong nhiều lĩnh vực? (11 kí tự)', a: 'CHÓ NGHIỆP VỤ'},
+      {q: 'Tính: (6494928-894732+84793)x36xo+1974', a: '1974'},
+      {q: 'Hiện nay, Đại tướng Lương Tam Quang giữ cương vị Bộ trưởng của Bộ gì ở Việt Nam (8 kí tự)', a: 'BỘ CÔNG AN'},
+      {q: 'Da của người da đen là màu gì? (6 kí tự)', a: 'MÀU ĐEN'}
     ];
     
     function normalize(s){if(!s) return '';const n=s.normalize('NFD').replace(/\p{Diacritic}/gu,'');return n.toLowerCase().replace(/[^a-z0-9\s]/gi,'').trim();}
