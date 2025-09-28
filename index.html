@@ -1,0 +1,1064 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vượt chướng ngại - Dựng giống Đường lên đỉnh Olympia</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    
+    :root {
+      --primary: #ff6b6b;
+      --primary-light: #ff8e8e;
+      --secondary: #4ecdc4;
+      --secondary-light: #7dd3db;
+      --accent: #45b7d1;
+      --accent-light: #96cdf0;
+      --warning: #feca57;
+      --success: #48cab2;
+      --background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      --surface: rgba(255, 255, 255, 0.15);
+      --surface-hover: rgba(255, 255, 255, 0.25);
+      --glass: rgba(255, 255, 255, 0.1);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.9);
+      --text-muted: rgba(255, 255, 255, 0.7);
+      --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.12);
+      --shadow-medium: 0 16px 64px rgba(0, 0, 0, 0.2);
+      --shadow-heavy: 0 24px 80px rgba(0, 0, 0, 0.3);
+      --border: rgba(255, 255, 255, 0.3);
+      --radius: 20px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--background);
+      min-height: 100vh;
+      color: var(--text-primary);
+      padding: 1rem; /* reduced padding from 2rem to 1rem */
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(69, 183, 209, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 60% 70%, rgba(254, 202, 87, 0.3) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+      animation: backgroundShift 20s ease-in-out infinite;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem); /* reduced font size from 2.5-4rem to 1.8-2.8rem */
+      font-weight: 900;
+      margin-bottom: 1.5rem; /* reduced margin from 3rem to 1.5rem */
+      text-align: center;
+      background: linear-gradient(135deg, #ffffff 0%, #feca57 50%, #ff6b6b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: titleGlow 3s ease-in-out infinite alternate;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    @keyframes titleGlow {
+      0% { filter: drop-shadow(0 0 20px rgba(255, 107, 107, 0.5)); }
+      100% { filter: drop-shadow(0 0 40px rgba(254, 202, 87, 0.8)); }
+    }
+
+    .board {
+      display: flex;
+      gap: 2rem; /* reduced gap from 4rem to 2rem */
+      align-items: flex-start;
+      max-width: 1400px; /* reduced max-width from 1600px to 1400px */
+      margin: 0 auto;
+      animation: boardSlideIn 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes boardSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .questions {
+      flex: 1;
+      min-width: 380px; /* reduced min-width from 450px to 380px */
+    }
+
+    .row {
+      display: flex;
+      gap: 1rem; /* reduced gap from 1.5rem to 1rem */
+      align-items: center;
+      padding: 1rem 1.5rem; /* reduced padding from 1.5rem 2rem to 1rem 1.5rem */
+      border-radius: var(--radius);
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--border);
+      margin-bottom: 1rem; /* reduced margin from 1.5rem to 1rem */
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: questionSlideIn 0.8s ease-out;
+      animation-fill-mode: both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .row::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.6s;
+    }
+
+    .row:hover::before {
+      left: 100%;
+    }
+
+    .row:nth-child(1) { animation-delay: 0.1s; }
+    .row:nth-child(2) { animation-delay: 0.2s; }
+    .row:nth-child(3) { animation-delay: 0.3s; }
+    .row:nth-child(4) { animation-delay: 0.4s; }
+    .row:nth-child(5) { animation-delay: 0.5s; }
+    .row:nth-child(6) { animation-delay: 0.6s; }
+    .row:nth-child(7) { animation-delay: 0.7s; }
+    .row:nth-child(8) { animation-delay: 0.8s; }
+    .row:nth-child(9) { animation-delay: 0.9s; }
+
+    @keyframes questionSlideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-100px) rotateY(-15deg);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0) rotateY(0deg);
+      }
+    }
+
+    .row:hover {
+      background: var(--surface-hover);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-heavy);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .num {
+      width: 50px; /* reduced width from 60px to 50px */
+      height: 50px; /* reduced height from 60px to 50px */
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem; /* reduced font size from 1.4rem to 1.2rem */
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-medium);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .num::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transition: all 0.4s ease;
+      transform: translate(-50%, -50%);
+    }
+
+    .num:hover::before {
+      width: 100px;
+      height: 100px;
+    }
+
+    .num:hover {
+      transform: scale(1.15) rotateZ(5deg);
+      box-shadow: var(--shadow-heavy);
+      background: linear-gradient(135deg, var(--warning) 0%, var(--primary) 100%);
+    }
+
+    .num:active {
+      transform: scale(0.95);
+    }
+
+    .num.disabled {
+      background: linear-gradient(135deg, var(--success) 0%, var(--secondary) 100%);
+      cursor: default;
+      animation: successPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes successPulse {
+      0%, 100% { box-shadow: var(--shadow-medium); }
+      50% { box-shadow: 0 0 40px rgba(72, 202, 178, 0.6); }
+    }
+
+    .num.disabled:hover {
+      transform: none;
+      background: linear-gradient(135deg, var(--success) 0%, var(--secondary) 100%);
+    }
+
+    .blanks {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .blank {
+      width: 36px; /* reduced width from 44px to 36px */
+      height: 40px; /* reduced height from 48px to 40px */
+      border: 3px dashed var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.08);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      font-size: 0.9rem; /* reduced font size from 1rem to 0.9rem */
+    }
+
+    .blank:not(:empty) {
+      border: 3px solid var(--success);
+      background: linear-gradient(135deg, rgba(72, 202, 178, 0.2) 0%, rgba(78, 205, 196, 0.1) 100%);
+      color: var(--success);
+      animation: blankFill 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 4px 20px rgba(72, 202, 178, 0.3);
+      transform: scale(1.05);
+    }
+
+    @keyframes blankFill {
+      0% {
+        transform: scale(0.5) rotateY(-90deg);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.2) rotateY(0deg);
+      }
+      100% {
+        transform: scale(1.05) rotateY(0deg);
+        opacity: 1;
+      }
+    }
+
+    .arena {
+      width: 420px; /* reduced width from 520px to 420px */
+      animation: arenaFloat 1.2s ease-out 0.5s both;
+    }
+
+    @keyframes arenaFloat {
+      from {
+        opacity: 0;
+        transform: translateY(100px) rotateX(-15deg);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg);
+      }
+    }
+
+    .grid {
+      width: 420px; /* reduced width from 520px to 420px */
+      height: 420px; /* reduced height from 520px to 420px */
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 10px; /* reduced gap from 12px to 10px */
+      margin-bottom: 2rem; /* reduced margin from 3rem to 2rem */
+      padding: 1.5rem; /* reduced padding from 2rem to 1.5rem */
+      background: var(--glass);
+      backdrop-filter: blur(30px);
+      border-radius: 32px;
+      border: 3px solid var(--border);
+      box-shadow: var(--shadow-heavy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .grid::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+      animation: gridShimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes gridShimmer {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    .tile {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: tileReveal 0.8s ease-out;
+      animation-fill-mode: both;
+      box-shadow: var(--shadow-light);
+    }
+
+    .tile:nth-child(1) { animation-delay: 0.1s; }
+    .tile:nth-child(2) { animation-delay: 0.2s; }
+    .tile:nth-child(3) { animation-delay: 0.3s; }
+    .tile:nth-child(4) { animation-delay: 0.4s; }
+    .tile:nth-child(5) { animation-delay: 0.5s; }
+    .tile:nth-child(6) { animation-delay: 0.6s; }
+    .tile:nth-child(7) { animation-delay: 0.7s; }
+    .tile:nth-child(8) { animation-delay: 0.8s; }
+    .tile:nth-child(9) { animation-delay: 0.9s; }
+
+    @keyframes tileReveal {
+      from {
+        opacity: 0;
+        transform: scale(0.5) rotateY(-180deg);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) rotateY(0deg);
+      }
+    }
+
+    .tile:hover {
+      transform: scale(1.05) rotateZ(2deg);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .tile .piece {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://img.cand.com.vn/resize/800x800/NewFiles/Images/2024/04/12/z5324021395304_18ccb89e5234639e0-1712879402177.jpg');
+      background-size: 300% 300%;
+      background-repeat: no-repeat;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 16px;
+    }
+
+    .tile.r0.c0 .piece { background-position: 0% 0%; }
+    .tile.r0.c1 .piece { background-position: 50% 0%; }
+    .tile.r0.c2 .piece { background-position: 100% 0%; }
+    .tile.r1.c0 .piece { background-position: 0% 50%; }
+    .tile.r1.c1 .piece { background-position: 50% 50%; }
+    .tile.r1.c2 .piece { background-position: 100% 50%; }
+    .tile.r2.c0 .piece { background-position: 0% 100%; }
+    .tile.r2.c1 .piece { background-position: 50% 100%; }
+    .tile.r2.c2 .piece { background-position: 100% 100%; }
+
+    .cover {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 2rem;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .cover.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.5) rotateY(180deg);
+    }
+
+    .controls {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    button {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      color: white;
+      border: 0;
+      padding: 1.25rem 2.5rem;
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-medium);
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    button:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: var(--shadow-heavy);
+      background: linear-gradient(135deg, var(--warning) 0%, var(--primary) 100%);
+    }
+
+    button:active {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    button.secondary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    }
+
+    button.secondary:hover {
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      animation: modalFadeIn 0.4s ease-out;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+      }
+      to {
+        opacity: 1;
+        backdrop-filter: blur(12px);
+      }
+    }
+
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(30px);
+      padding: 2rem; /* reduced padding from 3rem to 2rem */
+      border-radius: 32px;
+      min-width: 420px; /* reduced min-width from 500px to 420px */
+      max-width: 90%;
+      box-shadow: var(--shadow-heavy);
+      border: 3px solid var(--border);
+      animation: cardSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--warning) 50%, var(--secondary) 100%);
+    }
+
+    /* Adding countdown timer styles */
+    .countdown {
+      position: fixed;
+      top: 1rem; /* reduced top from 2rem to 1rem */
+      right: 1rem; /* reduced right from 2rem to 1rem */
+      width: 80px; /* reduced width from 100px to 80px */
+      height: 80px; /* reduced height from 100px to 80px */
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--warning) 0%, var(--primary) 100%);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem; /* reduced font size from 2.5rem to 2rem */
+      font-weight: 900;
+      color: white;
+      box-shadow: var(--shadow-heavy);
+      animation: countdownPulse 1s ease-in-out infinite;
+      z-index: 1001;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .countdown.show {
+      display: flex;
+    }
+
+    .countdown.warning {
+      background: linear-gradient(135deg, var(--primary) 0%, #e74c3c 100%);
+      animation: countdownUrgent 0.5s ease-in-out infinite;
+    }
+
+    @keyframes countdownPulse {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: var(--shadow-heavy);
+      }
+      50% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 40px rgba(254, 202, 87, 0.6);
+      }
+    }
+
+    @keyframes countdownUrgent {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 30px rgba(231, 76, 60, 0.8);
+      }
+      50% { 
+        transform: scale(1.1);
+        box-shadow: 0 0 50px rgba(231, 76, 60, 1);
+      }
+    }
+
+    .countdown-ring {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--success) 0%, var(--warning) 50%, var(--primary) 100%);
+      animation: countdownSpin 15s linear;
+      z-index: -1;
+    }
+
+    @keyframes countdownSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    @keyframes cardSlideIn {
+      from {
+        opacity: 0;
+        transform: scale(0.7) translateY(-100px) rotateX(-15deg);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0) rotateX(0deg);
+      }
+    }
+
+    .qtitle {
+      font-weight: 800;
+      margin-bottom: 1.5rem; /* reduced margin from 2rem to 1.5rem */
+      font-size: 1.1rem; /* reduced font size from 1.3rem to 1.1rem */
+      line-height: 1.4;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--warning) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .inputs {
+      display: flex;
+      gap: 0.5rem; /* reduced gap from 0.75rem to 0.5rem */
+      margin: 1.5rem 0; /* reduced margin from 2rem 0 to 1.5rem 0 */
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .inputBox {
+      width: 40px; /* reduced width from 48px to 40px */
+      height: 44px; /* reduced height from 52px to 44px */
+      border: 3px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.08);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      font-size: 1rem; /* reduced font size from 1.1rem to 1rem */
+    }
+
+    .inputBox:not(:empty) {
+      border-color: var(--success);
+      background: linear-gradient(135deg, rgba(72, 202, 178, 0.2) 0%, rgba(78, 205, 196, 0.1) 100%);
+      color: var(--success);
+      transform: scale(1.1);
+      box-shadow: 0 4px 20px rgba(72, 202, 178, 0.4);
+    }
+
+    .hint {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 1.25rem 1.5rem;
+      border-radius: 16px;
+      border: 3px solid var(--border);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.4s ease;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 6px rgba(69, 183, 209, 0.2);
+      transform: scale(1.02);
+    }
+
+    input[type="text"]::placeholder {
+      color: var(--text-muted);
+    }
+
+    .wrong {
+      animation: wrongShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    }
+
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-12px) rotateZ(-2deg); }
+      20%, 40%, 60%, 80% { transform: translateX(12px) rotateZ(2deg); }
+    }
+
+    #feedback {
+      margin-top: 1.5rem;
+      color: var(--primary);
+      font-weight: 700;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      margin-top: 2rem; /* reduced margin from 4rem to 2rem */
+      color: var(--text-muted);
+      font-size: 0.9rem; /* reduced font size from 1rem to 0.9rem */
+      text-align: center;
+      line-height: 1.8;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: footerFadeIn 1s ease-out 1.5s both;
+      padding: 1.5rem; /* reduced padding from 2rem to 1.5rem */
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius);
+      backdrop-filter: blur(10px);
+    }
+
+    @keyframes footerFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Adding start button styles */
+    .start-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .start-button {
+      background: linear-gradient(135deg, var(--success) 0%, var(--secondary) 100%);
+      color: white;
+      border: 0;
+      padding: 1.5rem 3rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 1.3rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-heavy);
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      animation: startButtonPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes startButtonPulse {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: var(--shadow-heavy);
+      }
+      50% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 50px rgba(72, 202, 178, 0.8);
+      }
+    }
+
+    .start-button:hover {
+      transform: translateY(-6px) scale(1.08);
+      box-shadow: 0 20px 60px rgba(72, 202, 178, 0.6);
+      background: linear-gradient(135deg, var(--warning) 0%, var(--primary) 100%);
+    }
+
+    .start-button:active {
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    .question-content {
+      display: none;
+    }
+
+    .question-content.show {
+      display: block;
+    }
+
+    @media (max-width: 1200px) {
+      .board {
+        flex-direction: column;
+        gap: 2rem; /* reduced gap from 3rem to 2rem */
+        align-items: center;
+      }
+      
+      .arena {
+        width: 100%;
+        max-width: 420px; /* reduced max-width from 520px to 420px */
+      }
+      
+      .grid {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+      }
+      
+      .questions {
+        min-width: auto;
+        width: 100%;
+        max-width: 500px; /* reduced max-width from 600px to 500px */
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0.5rem; /* reduced padding from 1rem to 0.5rem */
+      }
+      
+      h1 {
+        font-size: 2rem; /* reduced font size from 2.5rem to 2rem */
+        margin-bottom: 1rem; /* reduced margin from 2rem to 1rem */
+      }
+      
+      .card {
+        min-width: 320px; /* reduced min-width from 350px to 320px */
+        padding: 1.5rem; /* reduced padding from 2rem to 1.5rem */
+      }
+      
+      .controls {
+        flex-direction: column;
+        gap: 0.75rem; /* reduced gap from 1rem to 0.75rem */
+      }
+      
+      button {
+        padding: 0.875rem 1.75rem; /* reduced padding from 1rem 2rem to 0.875rem 1.75rem */
+        font-size: 0.95rem; /* reduced font size from 1rem to 0.95rem */
+      }
+      
+      .row {
+        padding: 1rem 1.25rem; /* reduced padding from 1.25rem 1.5rem to 1rem 1.25rem */
+      }
+      
+      .num {
+        width: 45px; /* reduced width from 50px to 45px */
+        height: 45px; /* reduced height from 50px to 45px */
+        font-size: 1.1rem; /* reduced font size from 1.2rem to 1.1rem */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .questions {
+        min-width: auto;
+      }
+      
+      .card {
+        min-width: 280px; /* reduced min-width from 300px to 280px */
+        padding: 1.25rem; /* reduced padding from 1.5rem to 1.25rem */
+      }
+      
+      .grid {
+        padding: 1rem; /* kept padding at 1rem */
+        gap: 6px; /* reduced gap from 8px to 6px */
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Vượt chướng ngại vật</h1>
+  <div class="board">
+    <div class="questions" id="questions"></div>
+    <div class="arena">
+      <div class="grid" id="grid"></div>
+      <div class="controls">
+        <button id="guessBtn" class="secondary">Đoán bức ảnh</button>
+        <button id="revealAll">Lật tất cả</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal">
+    <div class="card" role="dialog" aria-modal="true">
+      <div class="start-section" id="startSection">
+        <div class="qtitle" id="startModalQ"></div>
+        <div class="hint">Nhấn nút "Bắt đầu" để bắt đầu đếm ngược 15 giây và hiển thị câu hỏi.</div>
+        <button class="start-button" id="startQuestionBtn">🚀 Bắt đầu</button>
+      </div>
+      
+      <div class="question-content" id="questionContent">
+        <div class="qtitle" id="modalQ"></div>
+        <div class="hint">Dựa vào số ô trống (dưới đây) để đoán. Gõ câu trả lời vào ô nhập và nhấn Gửi.</div>
+        <div class="inputs" id="modalBlanks"></div>
+        <div style="margin-top:2rem;display:flex;gap:1.5rem;align-items:center">
+          <input type="text" id="answerInput" placeholder="Gõ đáp án" />
+          <button id="submitAnswer">Gửi</button>
+          <button id="closeModal" style="background:rgba(255,255,255,0.1);box-shadow:var(--shadow-light)">Đóng</button>
+        </div>
+        <div id="feedback"></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="countdown" id="countdown">
+    <div class="countdown-ring" id="countdownRing"></div>
+    <span id="countdownText">15</span>
+  </div>
+  
+  <footer>Ghi chú: các ô trống chỉ hiển thị ký tự chữ, khoảng trắng không đếm. Khi trả lời đúng, mảnh ảnh tương ứng sẽ được lật.</footer>
+  <script>
+    const qa = [
+      {q: 'Trong các trận chiến thời cổ đại, binh sĩ thường dùng vật gì hình tròn hoặc chữ nhật để che chắn khỏi đòn tấn công?', a: 'KHIÊN'},
+      {q: 'Hiệp sĩ thời Trung cổ mặc gì bằng kim loại để bảo vệ cơ thể trong chiến đấu?', a: 'ÁO GIÁP'},
+      {q: 'Khi làm việc ở công trường xây dựng, người ta thường phải đội vật gì để bảo vệ đầu?', a: 'MŨ BẢO HỘ'},
+      {q: 'Loại phương tiện chuyên dùng, được thiết kế đặc biệt cho các nhiệm vụ khó khăn và thường chỉ có cơ quan chức năng mới sử dụng, gọi là gì?', a: 'XE ĐẶC CHỦNG'},
+      {q: 'Loại xe quân sự có lớp vỏ dày bằng kim loại để chống đạn thường được gọi là gì?', a: 'XE BỌC THÉP'},
+      {q: 'Loài động vật nào thường được huấn luyện để đánh hơi, tìm kiếm hoặc bảo vệ trong nhiều lĩnh vực?', a: 'CHÓ NGHIỆP VỤ'},
+      {q: '(6494928 - 894732 + 84793)x36x0 + 1974', a: '1974'},
+      {q: 'Hiện nay, Đại tướng Lương Tam Quang giữ cương vị Bộ trưởng của Bộ gì ở Việt Nam', a: 'BỘ CÔNG AN'},
+      {q: 'Da của người da đen là màu gì?', a: 'MÀU ĐEN'}
+    ];
+    
+    function normalize(s){if(!s) return '';const n=s.normalize('NFD').replace(/\p{Diacritic}/gu,'');return n.toLowerCase().replace(/[^a-z0-9\s]/gi,'').trim();}
+    const questionsEl=document.getElementById('questions');const gridEl=document.getElementById('grid');const revealed=Array(9).fill(false);
+    qa.forEach((item,i)=>{
+      const row=document.createElement('div');
+      row.className='row';
+      const num=document.createElement('div');
+      num.className='num';
+      num.textContent=i+1;
+      num.dataset.index=i;
+      num.addEventListener('click',()=>openQuestion(i));
+      row.appendChild(num);
+
+      const blanks=document.createElement('div');
+      blanks.className='blanks';
+      for(let ch of item.a){
+        if(ch !== ' '){
+          const b=document.createElement('div');
+          b.className='blank';
+          blanks.appendChild(b);
+        }
+      }
+      row.appendChild(blanks);
+      questionsEl.appendChild(row);
+    });
+
+    for(let r=0;r<3;r++){for(let c=0;c<3;c++){const idx=r*3+c;const tile=document.createElement('div');tile.className=`tile r${r} c${c}`;const piece=document.createElement('div');piece.className='piece';tile.appendChild(piece);const cover=document.createElement('div');cover.className='cover';cover.innerHTML='<span style="opacity:.9;font-size:2rem;font-weight:800;">'+(idx+1)+'</span>';tile.appendChild(cover);gridEl.appendChild(tile);}}const modal=document.getElementById('modal');const modalQ=document.getElementById('modalQ');const modalBlanks=document.getElementById('modalBlanks');const answerInput=document.getElementById('answerInput');const submitAnswer=document.getElementById('submitAnswer');const closeModal=document.getElementById('closeModal');const feedback=document.getElementById('feedback');const countdownEl = document.getElementById('countdown');const countdownText = document.getElementById('countdownText');const countdownRing = document.getElementById('countdownRing');const startSection = document.getElementById('startSection');const startModalQ = document.getElementById('startModalQ');const startQuestionBtn = document.getElementById('startQuestionBtn');const questionContent = document.getElementById('questionContent');let currentIndex=null;
+    let countdownTimer = null;
+    let timeLeft = 15;
+
+    function openQuestion(i){
+      if(revealed[i]) return;
+      currentIndex=i;
+      modal.classList.add('show');
+      
+      startSection.style.display = 'block';
+      questionContent.classList.remove('show');
+      countdownEl.classList.remove('show'); // Show countdown with class instead of display flex
+      
+      startModalQ.textContent = `Câu ${i+1}: Bạn có sẵn sàng?`;
+      
+      modalQ.textContent=`Câu ${i+1}: `+qa[i].q;
+      modalBlanks.innerHTML='';
+      feedback.textContent='';
+      answerInput.value='';
+      
+      for(let ch of qa[i].a){
+        if(ch !== ' '){
+          const b=document.createElement('div');
+          b.className='inputBox';
+          modalBlanks.appendChild(b);
+        }
+      }
+    }
+
+    startQuestionBtn.addEventListener('click', () => {
+      // Hide start section, show question content and countdown
+      startSection.style.display = 'none';
+      questionContent.classList.add('show');
+      countdownEl.classList.add('show'); // Show countdown with class instead of display flex
+      
+      // Focus on input and start countdown
+      answerInput.focus();
+      startCountdown();
+    });
+
+    function startCountdown() {
+      timeLeft = 15;
+      countdownEl.classList.remove('warning');
+      countdownText.textContent = timeLeft;
+      
+      // Reset ring animation
+      countdownRing.style.animation = 'none';
+      countdownRing.offsetHeight; // Trigger reflow
+      countdownRing.style.animation = 'countdownSpin 15s linear';
+      
+      countdownTimer = setInterval(() => {
+        timeLeft--;
+        countdownText.textContent = timeLeft;
+        
+        if (timeLeft <= 3) {
+          countdownEl.classList.add('warning');
+        }
+        
+        if (timeLeft <= 0) {
+          clearInterval(countdownTimer);
+          timeoutQuestion();
+        }
+      }, 1000);
+    }
+
+    function stopCountdown() {
+      if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+      }
+    }
+
+    function timeoutQuestion() {
+      countdownEl.classList.remove('show'); // Hide countdown when timeout
+      feedback.textContent = 'Hết thời gian! Câu hỏi đã bị bỏ qua.';
+      modalBlanks.classList.add('wrong');
+      setTimeout(() => {
+        modalBlanks.classList.remove('wrong');
+        modal.classList.remove('show');
+      }, 1500);
+    }
+
+    closeModal.addEventListener('click',()=>{
+      stopCountdown();
+      countdownEl.classList.remove('show'); // Hide countdown when closing modal
+      startSection.style.display = 'block';
+      questionContent.classList.remove('show');
+      modal.classList.remove('show');
+    });
+
+    submitAnswer.addEventListener('click',()=>{
+      const user=normalize(answerInput.value).replace(/\s+/g,'');
+      const correct=normalize(qa[currentIndex].a).replace(/\s+/g,'');
+      const rowEl=questionsEl.children[currentIndex];
+      const blanksEls=rowEl.querySelectorAll('.blank');
+      if(user===correct&&user.length>0){
+        /* Stop countdown on correct answer */
+        stopCountdown();
+        countdownEl.classList.remove('show'); // Hide countdown on correct answer
+        const original=qa[currentIndex].a.replace(/\s+/g,'');
+        for(let k=0;k<blanksEls.length;k++){
+          blanksEls[k].textContent=original[k]||'';
+        }
+        revealTile(currentIndex);
+        const btn=rowEl.querySelector('.num');
+        btn.classList.add('disabled');
+        btn.style.pointerEvents='none';
+        revealed[currentIndex]=true;
+        modal.classList.remove('show');
+        checkWin();
+      }else{
+        feedback.textContent='Sai rồi — thử lại!';
+        modalBlanks.classList.add('wrong');
+        setTimeout(()=>modalBlanks.classList.remove('wrong'),600);
+      }
+    });
+
+    function revealTile(idx){const tile=gridEl.children[idx];const cover=tile.querySelector('.cover');cover.classList.add('hidden');}
+    document.getElementById('guessBtn').addEventListener('click',()=>{const g=prompt('Bạn đoán bức ảnh là gì?');if(!g)return;const guess=normalize(g).replace(/\s+/g,'');const target=normalize('Cảnh sát cơ động').replace(/\s+/g,'');if(guess===target){
+      for(let i=0;i<9;i++){
+        revealTile(i);
+        revealed[i]=true;
+      }
+      qa.forEach((it,idx)=>{
+        const row=questionsEl.children[idx];
+        const blanks=row.querySelectorAll('.blank');
+        const original=it.a.replace(/\s+/g,'');
+        blanks.forEach((b,k)=>b.textContent=original[k]||'');
+      });
+      setTimeout(()=>alert('Chúc mừng! Bạn đã đoán đúng bức ảnh. Trò chơi kết thúc.'),100);
+    }else{
+      alert('Sai dự đoán ảnh — tiếp tục chơi!');
+    }
+    checkWin();});
+    document.getElementById('revealAll').addEventListener('click',()=>{for(let i=0;i<9;i++) revealTile(i);});function checkWin(){if(revealed.every(x=>x)){setTimeout(()=>alert('Tất cả mảnh đã lật — trò chơi kết thúc!'),200);}}
+    modal.addEventListener('click',(e)=>{if(e.target===modal) {
+      stopCountdown();
+      countdownEl.classList.remove('show'); // Hide countdown when clicking outside modal
+      startSection.style.display = 'block';
+      questionContent.classList.remove('show');
+      modal.classList.remove('show');
+    }
+    });
+  </script>
+</body>
+</html>
